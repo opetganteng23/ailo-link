@@ -1,7 +1,7 @@
 import {
   allowRequest,
   createLink,
-  RESERVED_SLUGS,
+  isReservedSlug,
   SLUG_PATTERN,
 } from "@/lib/db";
 
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-    if (RESERVED_SLUGS.has(slug)) {
+    if (isReservedSlug(slug)) {
       return Response.json({ error: "Alias tidak tersedia" }, { status: 409 });
     }
   }

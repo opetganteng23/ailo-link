@@ -47,7 +47,18 @@ const generateSlug = customAlphabet(
   6,
 );
 
-export const RESERVED_SLUGS = new Set(["api", "_next", "favicon.ico"]);
+// Slugs that must never be handed out: app routes (current and likely future),
+// framework paths and common well-known names. Compared case-insensitively.
+export const RESERVED_SLUGS = new Set([
+  "api", "_next", "static", "assets", "public",
+  "admin", "login", "logout", "register", "signup", "dashboard", "settings",
+  "favicon", "robots", "sitemap", "manifest", "health", "status",
+  "www", "ailo", "about", "terms", "privacy",
+]);
+
+export function isReservedSlug(slug: string) {
+  return RESERVED_SLUGS.has(slug.toLowerCase());
+}
 export const SLUG_PATTERN = /^[A-Za-z0-9_-]{3,32}$/;
 
 const DUPLICATE_KEY = 11000;
@@ -116,7 +127,7 @@ export async function createLink(
 
   for (let attempt = 0; attempt < 5; attempt++) {
     const slug = generateSlug();
-    if (RESERVED_SLUGS.has(slug)) continue;
+    if (isReservedSlug(slug)) continue;
     const link = await tryInsert(slug);
     if (link) return link;
   }
