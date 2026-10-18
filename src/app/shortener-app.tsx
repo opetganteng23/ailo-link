@@ -90,7 +90,7 @@ export default function ShortenerApp() {
       <Emblem3D />
 
       <h1 className="mt-2 text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
-        <span className="title-3d text-ailo-teal">Ailo</span>
+        <span className="title-3d text-ailo-teal">ailo</span>
         <span className="title-3d-orange text-ailo-orange">.ai.id</span>
       </h1>
       <p className="mt-4 text-center text-slate-600">

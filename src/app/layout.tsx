@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Ailo.ai.id - Persingkat Link",
+  title: "ailo.ai.id - Persingkat Link",
   description: "Persingkat link panjang jadi link pendek, lengkap dengan QR code.",
 };
 
