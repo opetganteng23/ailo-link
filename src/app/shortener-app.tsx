@@ -93,8 +93,12 @@ export default function ShortenerApp() {
         <span className="title-3d text-ailo-teal">ailo</span>
         <span className="title-3d-orange text-ailo-orange">.ai.id</span>
       </h1>
-      <p className="mt-4 text-center text-slate-600">
-        Persingkat link panjang, bagikan sebagai link atau QR code.
+      <h2 className="mt-4 text-center text-xl font-bold text-ailo-teal-dark sm:text-2xl">
+        Shorten Links. Amplify Impact.
+      </h2>
+      <p className="mt-3 max-w-md text-center text-sm leading-relaxed text-slate-600">
+        Create short links and QR Codes with AI Labs. Share your ideas, track
+        engagement, and turn every click into a meaningful connection.
       </p>
 
       <div className="mt-8 w-full rounded-3xl border border-white bg-white/85 p-5 shadow-[0_20px_60px_-15px_rgba(0,90,112,0.35)] backdrop-blur sm:p-7">

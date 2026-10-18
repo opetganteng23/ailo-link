@@ -8,9 +8,15 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
+const title = "ailo.ai.id: Shorten Links. Amplify Impact";
+const description =
+  "Create short links and QR Codes with AI Labs. Share your ideas, track engagement, and turn every click into a meaningful connection.";
+
 export const metadata: Metadata = {
-  title: "ailo.ai.id - Persingkat Link",
-  description: "Persingkat link panjang jadi link pendek, lengkap dengan QR code.",
+  title,
+  description,
+  // Shown when the link is shared (WhatsApp, Slack, social).
+  openGraph: { title, description, siteName: "ailo.ai.id", type: "website" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
