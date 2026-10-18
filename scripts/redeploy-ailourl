@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Redeploy ailourl on the server. Installed as ~/bin/redeploy-ailourl.
+set -e
+cd /home/ailolabs/apps/ailourl
+
+echo "==> Pulling latest changes (ailourl)..."
+git checkout -- package-lock.json 2>/dev/null || true
+git pull origin main
+
+echo "==> Installing dependencies (npm ci, does not rewrite the lockfile)..."
+npm ci
+
+echo "==> Building..."
+# Cap heap: this server is shared with many other apps.
+NODE_OPTIONS=--max-old-space-size=1024 npm run build
+
+echo "==> Restarting pm2 process..."
+if pm2 describe ailourl >/dev/null 2>&1; then
+  pm2 restart ailourl --update-env
+else
+  pm2 start ecosystem.config.cjs
+fi
+pm2 save >/dev/null
+
+echo "==> Waiting for process to settle..."
+sleep 3
+
+echo "==> Health check..."
+HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5011/ || echo 'FAILED')
+if [ "$HTTP_CODE" != "200" ]; then
+  echo "!! WARNING: / returned $HTTP_CODE instead of 200 - check logs below"
+else
+  echo "==> / responded 200 OK"
+fi
+
+echo "==> Recent logs:"
+pm2 logs ailourl --lines 15 --nostream

@@ -43,3 +43,6 @@ next-env.d.ts
 
 # keep the example env file
 !.env.example
+
+# source logo (a copy lives in public/)
+/Logo AILO Squared.png

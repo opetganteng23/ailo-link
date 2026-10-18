@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import QRCode from "qrcode";
+import { makeQrWithLogo } from "@/lib/qr";
 
 const subscribe = () => () => {};
 const getHost = () => window.location.host;
@@ -35,7 +35,7 @@ export default function ShortenerApp() {
         return;
       }
       const shortUrl = `${window.location.origin}/${data.link.slug}`;
-      const qr = await QRCode.toDataURL(shortUrl, { width: 512, margin: 2 });
+      const qr = await makeQrWithLogo(shortUrl);
       setResult({ shortUrl, qr });
       setUrl("");
       setSlug("");
@@ -58,7 +58,7 @@ export default function ShortenerApp() {
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
           <path d="M15 3h6v6M10 14 21 3" />
         </svg>
-        {host || "short.url"}
+        Ailo.ai.id
       </h1>
 
       <form onSubmit={onSubmit} className="mt-10 w-full">
