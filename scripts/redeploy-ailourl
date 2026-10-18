@@ -7,12 +7,18 @@ echo "==> Pulling latest changes (ailourl)..."
 git checkout -- package-lock.json 2>/dev/null || true
 git pull origin main
 
-echo "==> Installing dependencies (npm ci, does not rewrite the lockfile)..."
-npm ci
-
-echo "==> Building..."
-# Cap heap: this server is shared with many other apps.
-NODE_OPTIONS=--max-old-space-size=1024 npm run build
+echo "==> Installing dependencies and building (memory-capped)..."
+# This server is shared with many other apps and its swap is nearly full. Run
+# install + build in a cgroup with a hard memory limit, so a runaway build is
+# killed on its own instead of the kernel OOM-killer picking another app.
+BUILD_CMD="export HOME='$HOME'; cd '$PWD' && npm ci && NODE_OPTIONS=--max-old-space-size=768 npm run build"
+if command -v systemd-run >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+  sudo -n systemd-run --scope --quiet --uid="$(id -u)" --gid="$(id -g)" \
+    -p MemoryMax=1000M -p MemorySwapMax=0 bash -c "$BUILD_CMD"
+else
+  echo "!! systemd-run/sudo unavailable, building without a memory cap"
+  bash -c "$BUILD_CMD"
+fi
 
 echo "==> Restarting pm2 process..."
 if pm2 describe ailourl >/dev/null 2>&1; then
