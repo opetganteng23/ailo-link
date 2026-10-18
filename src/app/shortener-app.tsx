@@ -220,39 +220,37 @@ export default function ShortenerApp() {
         {result && mode === "qr" && (
           <div
             key="qr"
-            className="rise-in mt-4 flex items-center gap-3 rounded-2xl bg-sky-50 p-3 sm:gap-4 sm:p-4"
+            className="rise-in mt-3 flex flex-col items-center gap-2 rounded-2xl bg-sky-50 p-3 text-center"
           >
+            {/* QR on top; its size follows the viewport height so the page
+                never needs to scroll. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={result.qr}
               alt={`QR code for ${result.shortUrl}`}
-              className="h-24 w-24 shrink-0 rounded-2xl bg-white p-1 shadow-lg max-[360px]:h-20 max-[360px]:w-20 sm:h-36 sm:w-36 sm:p-1.5 short-landscape:h-20 short-landscape:w-20 short-landscape:p-1"
+              className="aspect-square h-[clamp(84px,17vh,176px)] rounded-2xl bg-white p-1 shadow-lg short-landscape:h-18"
             />
-            <div className="min-w-0 flex-1 text-left">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Your short link
-              </p>
-              <a
-                href={result.shortUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-1 block break-all text-base font-bold text-ailo-teal hover:underline sm:text-lg"
-              >
-                {result.shortUrl}
+            {/* short link underneath */}
+            <a
+              href={result.shortUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="block max-w-full break-all text-base font-bold text-ailo-teal hover:underline sm:text-lg"
+            >
+              {result.shortUrl}
+            </a>
+            <div className="flex flex-wrap items-center justify-center gap-1.5">
+              {copyButton}
+              <a href={result.qr} download="qrcode-ailo.png" className={softButton}>
+                Download QR
               </a>
-              <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:mt-3 sm:gap-2">
-                {copyButton}
-                <a href={result.qr} download="qrcode-ailo.png" className={softButton}>
-                  Download QR
-                </a>
-                {anotherButton}
-              </div>
+              {anotherButton}
             </div>
           </div>
         )}
       </div>
 
-      <p className="mt-4 text-center text-xs text-slate-500 short-landscape:hidden short-portrait:hidden">
+      <p className="mt-4 text-center text-xs text-slate-500 short:hidden short-portrait:hidden">
         AILO · Telkom University&apos;s Center of Excellence
       </p>
       </div>

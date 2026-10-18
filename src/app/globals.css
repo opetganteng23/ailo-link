@@ -15,6 +15,7 @@ body {
 
 /* Short screens: phones in landscape, and very small portrait phones. */
 @custom-variant short-landscape (@media (max-height: 520px) and (min-width: 600px));
+@custom-variant short (@media (max-height: 660px));
 @custom-variant short-portrait (@media (max-height: 700px) and (max-width: 599px));
 
 /* --- animations ------------------------------------------------------- */
