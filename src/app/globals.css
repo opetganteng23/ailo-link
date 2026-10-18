@@ -13,6 +13,10 @@ body {
   background: #eef6fb;
 }
 
+/* Short screens: phones in landscape, and very small portrait phones. */
+@custom-variant short-landscape (@media (max-height: 520px) and (min-width: 600px));
+@custom-variant short-portrait (@media (max-height: 700px) and (max-width: 599px));
+
 /* --- animations ------------------------------------------------------- */
 @keyframes drift {
   from { transform: translateX(-30vw); }
@@ -61,6 +65,12 @@ body {
   text-shadow:
     0 1px 0 #d8651b, 0 2px 0 #c15c18, 0 3px 0 #ab5215, 0 4px 0 #954913,
     0 5px 0 #804010, 0 6px 0 #6b370e, 0 7px 14px rgba(110, 50, 10, 0.35);
+}
+
+.title-3d-dark {
+  text-shadow:
+    0 1px 0 #3d3d3d, 0 2px 0 #353535, 0 3px 0 #2d2d2d, 0 4px 0 #262626,
+    0 5px 0 #1f1f1f, 0 6px 0 #181818, 0 7px 14px rgba(0, 0, 0, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {

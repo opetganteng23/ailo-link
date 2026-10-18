@@ -8,7 +8,7 @@ export async function GET(
   const { slug } = await ctx.params;
   const link = await getLink(slug);
   if (!link) {
-    return new Response("Link tidak ditemukan", { status: 404 });
+    return new Response("Link not found", { status: 404 });
   }
   await incrementClicks(slug);
   // 302 so browsers don't cache the redirect and every click is counted.

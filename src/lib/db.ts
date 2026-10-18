@@ -11,7 +11,7 @@ function getClient(): Promise<MongoClient> {
   if (!globalForMongo._mongoClient) {
     const uri = process.env.MONGODB_URI;
     if (!uri) {
-      throw new Error("MONGODB_URI belum diset (lihat .env.example)");
+      throw new Error("MONGODB_URI is not set (see .env.example)");
     }
     globalForMongo._mongoClient = new MongoClient(uri).connect();
   }

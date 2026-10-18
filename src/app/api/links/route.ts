@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unknown";
   if (!(await allowRequest(`create:${ip}`, LIMIT_PER_HOUR, 60 * 60 * 1000))) {
     return Response.json(
-      { error: "Terlalu banyak permintaan, coba lagi nanti" },
+      { error: "Too many requests, please try again later" },
       { status: 429 },
     );
   }
@@ -30,11 +30,11 @@ export async function POST(request: Request) {
   try {
     parsed = new URL(rawUrl);
   } catch {
-    return Response.json({ error: "URL tidak valid" }, { status: 400 });
+    return Response.json({ error: "Invalid URL" }, { status: 400 });
   }
   if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
     return Response.json(
-      { error: "Hanya URL http/https yang diperbolehkan" },
+      { error: "Only http/https URLs are allowed" },
       { status: 400 },
     );
   }
@@ -44,18 +44,18 @@ export async function POST(request: Request) {
     slug = body.slug.trim();
     if (!SLUG_PATTERN.test(slug)) {
       return Response.json(
-        { error: "Alias harus 3-32 karakter: huruf, angka, - atau _" },
+        { error: "Alias must be 3-32 characters: letters, numbers, - or _" },
         { status: 400 },
       );
     }
     if (isReservedSlug(slug)) {
-      return Response.json({ error: "Alias tidak tersedia" }, { status: 409 });
+      return Response.json({ error: "This alias is not available" }, { status: 409 });
     }
   }
 
   const link = await createLink(parsed.toString(), slug);
   if (!link) {
-    return Response.json({ error: "Alias sudah dipakai" }, { status: 409 });
+    return Response.json({ error: "This alias is already taken" }, { status: 409 });
   }
   return Response.json({ link }, { status: 201 });
 }

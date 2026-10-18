@@ -36,7 +36,7 @@ function Cloud({ top, width, duration, delay, opacity }: CloudProps) {
 export default function Home() {
   return (
     <main
-      className="relative min-h-screen overflow-hidden px-4 py-10"
+      className="relative min-h-dvh overflow-hidden px-4 py-4"
       style={{
         background:
           "radial-gradient(60rem 30rem at 15% 0%, rgba(0,128,157,0.10), transparent 60%), radial-gradient(50rem 28rem at 90% 10%, rgba(244,116,33,0.10), transparent 60%), linear-gradient(180deg, #d6eaf8 0%, #eef6fc 40%, #ffffff 100%)",
@@ -49,7 +49,7 @@ export default function Home() {
         <Cloud top="68%" width={200} duration={80} delay={-10} opacity={0.75} />
         <Cloud top="84%" width={340} duration={120} delay={-95} opacity={0.95} />
       </div>
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-5rem)] max-w-xl flex-col items-center justify-center">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-2rem)] max-w-2xl flex-col items-center justify-center short-landscape:max-w-4xl">
         <ShortenerApp />
       </div>
     </main>
